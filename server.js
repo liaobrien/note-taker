@@ -79,6 +79,9 @@ app.post('/api/notes', (req, res) => {
             console.log(response);
             res.status(201).json(response);
       }
+      else {
+            res.status(500).json('Error in posting note');
+      }
 });
 
 app.listen(PORT, () =>

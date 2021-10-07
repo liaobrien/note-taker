@@ -36,9 +36,8 @@ app.get('*', (req, res) => {
 
 // POST / api / notes should receive a new note to save on the request body, add it to the db.json file, and then return the new note to the client.
 app.post('/api/notes', (req, res) => {
-      console.info(`${req.method} request received to add a review`);
+      console.info(`${req.method} request received to add a note`);
 
-      // not sure where to go from here just yet...
       const { title, text } = req.body;
 
       if (title && text) {
@@ -46,7 +45,7 @@ app.post('/api/notes', (req, res) => {
             const newNote = {
                   title,
                   text,
-                  note_id: uuid(),
+                  id: uuid(),
             };
 
             fs.readFile('./db/db.json', 'utf8', (err, data) => {
@@ -82,6 +81,18 @@ app.post('/api/notes', (req, res) => {
       else {
             res.status(500).json('Error in posting note');
       }
+});
+
+app.delete("/api/notes/:id", function (req, res) {
+      const deleteId = req.params.id;
+      const newNoteData = req.body;
+      const remainingNotes = noteData.filter(noteObj => noteObj.id !== deleteId);
+      remainingNotes.push(newNoteData);
+      remainingNotes.splice((remainingNotes.length - 1), 1)
+      res.json(remainingNotes);
+      writeFileAsync("./db/db.json", JSON.stringify(remainingNotes), function (err) {
+            res.end();
+      });
 });
 
 app.listen(PORT, () =>

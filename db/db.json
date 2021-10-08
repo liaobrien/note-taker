@@ -1,1 +1,17 @@
-[{"title":"Test","text":"test","id":"543b"},{"title":"test2","text":"test2","id":"b01e"}]
+[
+    {
+        "title": "Lunch w/ Emily on Monday",
+        "text": "1pm at Santa Fe",
+        "id": "9c29"
+    },
+    {
+        "title": "Grocery List",
+        "text": "- Milk\n- Eggs\n- Cheese\n- Cereal\n- Juice",
+        "id": "1b62"
+    },
+    {
+        "title": "Make doctor's appointment",
+        "text": "Dr. Johnson 555-555-5555",
+        "id": "bd2c"
+    }
+]

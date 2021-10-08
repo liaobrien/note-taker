@@ -8,7 +8,6 @@ const util = require('util');
 const noteData = require('./db/db.json');
 
 const readFileAsync = util.promisify(fs.readFile);
-const writeFileAsync = util.promisify(fs.writeFile);
 
 
 const PORT = process.env.PORT || 3001;
@@ -34,7 +33,7 @@ app.get('*', (req, res) => {
 });
 
 
-// POST / api / notes should receive a new note to save on the request body, add it to the db.json file, and then return the new note to the client.
+// POST request that receives a new note, adds it to the db.json file, and then return the new note to the client
 app.post('/api/notes', (req, res) => {
       console.info(`${req.method} request received to add a note`);
 
@@ -51,21 +50,15 @@ app.post('/api/notes', (req, res) => {
             fs.readFile('./db/db.json', 'utf8', (err, data) => {
                   if (err) {
                         console.error(err);
-                  } else {
-
+                  }
+                  else {
                         const parsedNotes = JSON.parse(data);
-
 
                         parsedNotes.push(newNote);
 
-                        fs.writeFile(
-                              './db/db.json',
-                              JSON.stringify(parsedNotes, null, 4),
-                              (writeErr) =>
-                                    writeErr
-                                          ? console.error(writeErr)
-                                          : console.info('Successfully updated notes!')
-                        );
+                        fs.writeFile('./db/db.json', JSON.stringify(parsedNotes, null, 4), (writeErr) => {
+                              writeErr ? console.error(writeErr) : console.info('Successfully updated notes!')
+                        });
                   }
             });
 
@@ -93,7 +86,7 @@ app.delete("/api/notes/:id", function (req, res) {
                         break;
                   }
             }
-
+            // re-renders the remaining notes after one is deleted
             fs.writeFile(`./db/db.json`, JSON.stringify(parsedNotes), (err) => {
                   err ? console.log(err) : console.log("Note successfully deleted.");
             });

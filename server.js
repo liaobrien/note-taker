@@ -84,10 +84,21 @@ app.post('/api/notes', (req, res) => {
 
 // delete note feature
 app.delete("/api/notes/:id", function (req, res) {
-      for (let i = 0; i < .length; i++) {
-            const element = array[i];
-
+      for (let i = 0; i < noteData.length; i++) {
+            if (noteData[i].id === req.params.id) {
+                  noteData.splice(i, 1)
+                  break;
+            }
       }
+
+      fs.writeFile(`./db/db.json`, JSON.stringify(noteData), (err) => {
+            if (err) {
+                  return console.log(err);
+            } else {
+                  console.log("Note successfully deleted!");
+            }
+      });
+      res.json(noteData);
 });
 
 app.listen(PORT, () =>

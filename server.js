@@ -41,7 +41,7 @@ app.post('/api/notes', (req, res) => {
       const { title, text } = req.body;
 
       if (title && text) {
-            // Variable for the object we will save
+
             const newNote = {
                   title,
                   text,
@@ -52,13 +52,12 @@ app.post('/api/notes', (req, res) => {
                   if (err) {
                         console.error(err);
                   } else {
-                        // Convert string into JSON object
+
                         const parsedNotes = JSON.parse(data);
 
-                        // Add a new review
+
                         parsedNotes.push(newNote);
 
-                        // Write updated reviews back to the file
                         fs.writeFile(
                               './db/db.json',
                               JSON.stringify(parsedNotes, null, 4),
@@ -83,18 +82,14 @@ app.post('/api/notes', (req, res) => {
       }
 });
 
+// delete note feature
 app.delete("/api/notes/:id", function (req, res) {
-      const deleteId = req.params.id;
-      const newNoteData = req.body;
-      const remainingNotes = noteData.filter(noteObj => noteObj.id !== deleteId);
-      remainingNotes.push(newNoteData);
-      remainingNotes.splice((remainingNotes.length - 1), 1)
-      res.json(remainingNotes);
-      writeFileAsync("./db/db.json", JSON.stringify(remainingNotes), function (err) {
-            res.end();
-      });
+      for (let i = 0; i < .length; i++) {
+            const element = array[i];
+
+      }
 });
 
 app.listen(PORT, () =>
-      console.log(`App listening at http://localhost:${PORT} 🚀`)
+      console.log(`App listening at on ${PORT}`)
 );
